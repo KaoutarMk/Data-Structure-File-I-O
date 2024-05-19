@@ -1,21 +1,22 @@
 package main;
 import java.io.*;
 
-public class MultipleRecursiveOddonacci {
-    public static int oddonacci(int n) {
-        if (n == 0 || n == 1 || n == 2) {
+public static int multipleOddonacci(int n, int[] memo) {
+        if (memo[n] != 0)
+            return memo[n];
+        if (n <= 3)
             return 1;
-        } else {
-            return oddonacci(n - 1) + oddonacci(n - 2) + oddonacci(n - 3);
+        else {
+            memo[n] = multipleOddonacci(n-1, memo) + multipleOddonacci(n-2, memo) + multipleOddonacci(n-3, memo);
+            return memo[n];
         }
     }
-
     public static void main(String[] args) {
         // Output results and time measurements for values up to 200
         try (PrintWriter out = new PrintWriter("OddoOutMultiple.txt")) {
             for (int i = 5; i <= 50; i += 5) { // Reduced upper limit due to exponential growth
                 long startTime = System.nanoTime();
-                int result = oddonacci(i);
+				int result = multipleOddonacci(i, new int[i+1]);
                 long endTime = System.nanoTime();
                 long duration = endTime - startTime;
                 out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
