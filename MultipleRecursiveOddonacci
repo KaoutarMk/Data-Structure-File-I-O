@@ -1,7 +1,8 @@
 package main;
 import java.io.*;
 
-public static int multipleOddonacci(int n, int[] memo) {
+public class MultipleRecursiveOddonacci {
+	public static int multipleOddonacci(int n, int[] memo) {
         if (memo[n] != 0)
             return memo[n];
         if (n <= 3)
@@ -11,18 +12,28 @@ public static int multipleOddonacci(int n, int[] memo) {
             return memo[n];
         }
     }
+
     public static void main(String[] args) {
-        // Output results and time measurements for values up to 200
-        try (PrintWriter out = new PrintWriter("OddoOutMultiple.txt")) {
-            for (int i = 5; i <= 50; i += 5) { // Reduced upper limit due to exponential growth
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter("OddoOutMultiple.txt");
+            for (int i = 5; i <= 200; i += 5) { // Reduced upper limit due to exponential growth
                 long startTime = System.nanoTime();
-		int result = multipleOddonacci(i, new int[i+1]);
+                int result = multipleOddonacci(i, new int[i+1]);
                 long endTime = System.nanoTime();
                 long duration = endTime - startTime;
                 out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
+                System.out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
             }
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (out != null) {
+                out.close();
+            }
         }
     }
+
 }
+
+
