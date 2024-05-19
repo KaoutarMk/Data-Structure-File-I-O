@@ -1,0 +1,33 @@
+package main;
+import java.io.*;
+
+public class LinearOddonacci {
+	public static int oddonacci(int n) {
+        if (n == 0 || n == 1 || n == 2) {
+            return 1;
+        }
+        int a = 1, b = 1, c = 1, result = 0;
+        for (int i = 3; i <= n; i++) {
+            result = a + b + c;
+            a = b;
+            b = c;
+            c = result;
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        // Output results and time measurements for values up to 200
+        try (PrintWriter out = new PrintWriter("OddoOutLinear.txt")) {
+            for (int i = 5; i <= 200; i += 5) {
+                long startTime = System.nanoTime();
+                int result = oddonacci(i);
+                long endTime = System.nanoTime();
+                long duration = endTime - startTime;
+                out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
