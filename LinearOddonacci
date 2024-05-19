@@ -1,28 +1,41 @@
 package main;
 import java.io.*;
+import java.util.*;
 
 public class LinearOddonacci {
-	public static int linearOddonacci(int n) {
-	        if (n == 1 || n == 2 || n == 3) {
-	            return 1; // Base case for n = 0, 1, 2
-	        }
-	        return linearOddonacci(n - 1) + linearOddonacci(n - 2) + linearOddonacci(n - 3);
-	}
-
-    
+	public static int linearOddonacci(int n, int[] memo) {
+        if (n == 1 || n == 2 || n == 3) {
+            return 1;
+        }
+        if (memo[n] != -1) {
+            return memo[n];
+        }
+        memo[n] = linearOddonacci(n-1, memo) + linearOddonacci(n-2, memo) + linearOddonacci(n-3, memo);
+        return memo[n];
+    }
 
     public static void main(String[] args) {
-        // Output results and time measurements for values up to 200
-        try (PrintWriter out = new PrintWriter("OddoOutLinear.txt")) {
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter("OddoOutLinear.txt");
             for (int i = 5; i <= 200; i += 5) {
                 long startTime = System.nanoTime();
-                int result = oddonacci(i);
+                int[] memo = new int[i+1];
+                Arrays.fill(memo, -1);
+                int result = linearOddonacci(i, memo);
                 long endTime = System.nanoTime();
                 long duration = endTime - startTime;
                 out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
+                System.out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
             }
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        }catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (out != null) {
+                out.close();
+            }
         }
     }
 }
