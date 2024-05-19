@@ -2,18 +2,13 @@ package main;
 import java.io.*;
 
 public class LinearOddonacci {
-	public static int oddonacci(int n) {
-        if (n == 0 || n == 1 || n == 2) {
-            return 1;
-        }
-        int a = 1, b = 1, c = 1, result = 0;
-        for (int i = 3; i <= n; i++) {
-            result = a + b + c;
-            a = b;
-            b = c;
-            c = result;
-        }
-        return result;
+	public static int linearOddonacci(int n) {
+	        if (n == 1 || n == 2 || n == 3) {
+	            return 1; // Base case for n = 0, 1, 2
+	        }
+	        return linearOddonacci(n - 1) + linearOddonacci(n - 2) + linearOddonacci(n - 3);
+	}
+
     }
 
     public static void main(String[] args) {
