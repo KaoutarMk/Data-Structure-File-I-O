@@ -1,0 +1,27 @@
+package main;
+import java.io.*;
+
+public class MultipleRecursiveOddonacci {
+    public static int oddonacci(int n) {
+        if (n == 0 || n == 1 || n == 2) {
+            return 1;
+        } else {
+            return oddonacci(n - 1) + oddonacci(n - 2) + oddonacci(n - 3);
+        }
+    }
+
+    public static void main(String[] args) {
+        // Output results and time measurements for values up to 200
+        try (PrintWriter out = new PrintWriter("OddoOutMultiple.txt")) {
+            for (int i = 5; i <= 50; i += 5) { // Reduced upper limit due to exponential growth
+                long startTime = System.nanoTime();
+                int result = oddonacci(i);
+                long endTime = System.nanoTime();
+                long duration = endTime - startTime;
+                out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
