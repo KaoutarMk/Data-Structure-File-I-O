@@ -1,0 +1,8 @@
+Oddonacci(5) = 5, Time: 2801 ns
+Oddonacci(10) = 105, Time: 11801 ns
+Oddonacci(15) = 2209, Time: 196600 ns
+Oddonacci(20) = 46499, Time: 543400 ns
+Oddonacci(25) = 978793, Time: 5189600 ns
+Oddonacci(30) = 20603361, Time: 445619000 ns
+Oddonacci(35) = 433695873, Time: 6650008101 ns
+Oddonacci(40) = 539260895, Time: 85838318699 ns
