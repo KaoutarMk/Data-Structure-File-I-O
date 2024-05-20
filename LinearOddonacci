@@ -1,38 +1,75 @@
+/*
+    LinearOddonacci.java
+    
+    This Java class is part of a programming assignment. It computes Oddonacci numbers using a linear recursive approach with memoization. The Oddonacci sequence is a variation of the Fibonacci sequence, where each number is the sum of the preceding three numbers.
+
+    The linearOddonacci method recursively computes the nth Oddonacci number. It utilizes a memoization array to store previously computed values to avoid redundant calculations.
+
+    The main method demonstrates the computation of Oddonacci numbers for values ranging from 5 to 200 in increments of 5. It measures the execution time of each computation and outputs the results to a text file named "OddoOutLinear.txt".
+
+    Author: Kaoutar Machouat (40268038) and Raouane Bouskaya (40283394)
+    Date: 19th May, 2024
+*/
+
 package main;
 import java.io.*;
-import java.util.*;
 
 public class LinearOddonacci {
-	public static int linearOddonacci(int n, int[] memo) {
-        if (n == 1 || n == 2 || n == 3) {
-            return 1;
+
+    /**
+     * Computes the nth Oddonacci number using a linear recursive approach.
+     * This method uses an array to store the last three computed Oddonacci numbers.
+     *
+     * @param k The position of the Oddonacci number to compute.
+     * @return An array containing the current Oddonacci number and the previous two numbers.
+     */
+    public static int[] oddonacci_Linear(int k) {
+        // Base cases for the first three Oddonacci numbers
+        if (k == 1) {
+            return new int[] {1, 0, 0};
         }
-        if (memo[n] != -1) {
-            return memo[n];
+        if (k == 2) {
+            return new int[] {1, 1, 0};
         }
-        memo[n] = linearOddonacci(n-1, memo) + linearOddonacci(n-2, memo) + linearOddonacci(n-3, memo);
-        return memo[n];
+        if (k == 3) {
+            return new int[] {1, 1, 1};
+        }
+        
+        // Recursive call to get the previous Oddonacci numbers
+        int[] prevResult = oddonacci_Linear(k - 1);
+        
+        // Calculate the current Oddonacci number
+        int i = prevResult[0] + prevResult[1] + prevResult[2];
+        int j = prevResult[0];
+        int f = prevResult[1];
+        
+        // Return the current and previous two Oddonacci numbers
+        return new int[] {i, j, f};
     }
 
     public static void main(String[] args) {
         PrintWriter out = null;
         try {
+            // Initialize the PrintWriter to write results to a file
             out = new PrintWriter("OddoOutLinear.txt");
+            
+            // Compute Oddonacci numbers for values from 5 to 200 in increments of 5
             for (int i = 5; i <= 200; i += 5) {
-                long startTime = System.nanoTime();
-                int[] memo = new int[i+1];
-                Arrays.fill(memo, -1);
-                int result = linearOddonacci(i, memo);
-                long endTime = System.nanoTime();
-                long duration = endTime - startTime;
-                out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
-                System.out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
+                long startTime = System.nanoTime(); // Record the start time
+                int[] result = oddonacci_Linear(i); // Compute the Oddonacci number
+                long endTime = System.nanoTime(); // Record the end time
+                long duration = endTime - startTime; // Calculate the duration
+                
+                // Write the result to the file
+                out.println("Oddonacci(" + i + ") = " + result[0] + ", Time: " + duration + " ns");
+                // Print the result to the console for verification
+                System.out.println("Oddonacci(" + i + ") = " + result[0] + ", Time: " + duration + " ns");
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        }catch (Exception e) {
+            // Handle any IOExceptions
             e.printStackTrace();
         } finally {
+            // Ensure the PrintWriter is closed to flush any remaining output
             if (out != null) {
                 out.close();
             }
