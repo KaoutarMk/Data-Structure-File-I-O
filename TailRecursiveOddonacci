@@ -1,0 +1,39 @@
+package main;
+import java.io.*;
+
+public class TailRecursiveOddonacci {
+	
+	// Helper method for tail-recursive Oddonacci calculation
+    public static int oddonacciTailRecursive(int k, int a, int b, int c) {
+        if (k == 1) {
+            return a;
+        }
+        return oddonacciTailRecursive(k - 1, b, c, a + b + c);
+    }
+    
+    // Tail-recursive Oddonacci calculation entry point
+    public static int oddonacci(int k) {
+        return oddonacciTailRecursive(k, 1, 1, 1);
+    }
+
+    public static void main(String[] args) {
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter("OddoOutTailRecursive.txt");
+            for (int i = 5; i <= 200; i += 5) {
+                long startTime = System.nanoTime();
+                int result = oddonacci(i);
+                long endTime = System.nanoTime();
+                long duration = endTime - startTime;
+                out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
+                System.out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
+}
