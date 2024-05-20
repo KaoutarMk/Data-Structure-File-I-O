@@ -1,39 +1,64 @@
+/*
+    LinearOddonacci.java
+    
+    This Java class is part of a programming assignment. It computes Oddonacci numbers using a multiple recursive approach with memoization. The Oddonacci sequence is a variation of the Fibonacci sequence, where each number is the sum of the preceding three numbers.
+
+    The multipleOddonacci method recursively computes the nth Oddonacci number. It utilizes a memoization array to store previously computed values to avoid redundant calculations.
+
+    The main method demonstrates the computation of Oddonacci numbers for values ranging from 5 to 200 in increments of 5. It measures the execution time of each computation and outputs the results to a text file named "OddoOutMultiple.txt".
+
+    Author: Kaoutar Machouat (40268038) and Raouane Bouskaya (40283394)
+    Date: 19th May, 2024
+*/
+
 package main;
 import java.io.*;
 
 public class MultipleRecursiveOddonacci {
-	public static int multipleOddonacci(int n, int[] memo) {
-        if (memo[n] != 0)
-            return memo[n];
-        if (n <= 3)
+
+    /**
+     * Computes the nth Oddonacci number using a multiple recursive approach.
+     *
+     * @param k The position of the Oddonacci number to compute.
+     * @return The nth Oddonacci number.
+     */
+    public static int multipleOddonacci(int k) {
+        // Base cases for the first three Oddonacci numbers
+        if (k == 1 || k == 2 || k == 3) {
             return 1;
-        else {
-            memo[n] = multipleOddonacci(n-1, memo) + multipleOddonacci(n-2, memo) + multipleOddonacci(n-3, memo);
-            return memo[n];
         }
+        // Recursive calls to compute the nth Oddonacci number
+        return multipleOddonacci(k - 1) + multipleOddonacci(k - 2) + multipleOddonacci(k - 3);
     }
 
     public static void main(String[] args) {
         PrintWriter out = null;
         try {
+            // Initialize the PrintWriter to write results to a file
             out = new PrintWriter("OddoOutMultiple.txt");
-            for (int i = 5; i <= 200; i += 5) { // Reduced upper limit due to exponential growth
-                long startTime = System.nanoTime();
-                int result = multipleOddonacci(i, new int[i+1]);
-                long endTime = System.nanoTime();
-                long duration = endTime - startTime;
+            
+            // Compute Oddonacci numbers for values from 5 to 200 in increments of 5
+            for (int i = 5; i <= 200; i += 5) {
+                long startTime = System.nanoTime(); // Record the start time
+                int result = multipleOddonacci(i); // Compute the Oddonacci number
+                long endTime = System.nanoTime(); // Record the end time
+                long duration = endTime - startTime; // Calculate the duration
+                
+                // Write the result to the file
                 out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
+                out.flush(); // Flush the PrintWriter to ensure data is written immediately
+                // Print the result to the console for verification
                 System.out.println("Oddonacci(" + i + ") = " + result + ", Time: " + duration + " ns");
             }
         } catch (IOException e) {
+            // Handle any IOExceptions
             e.printStackTrace();
         } finally {
+            // Ensure the PrintWriter is closed to flush any remaining output
             if (out != null) {
                 out.close();
             }
         }
     }
-
 }
-
 
