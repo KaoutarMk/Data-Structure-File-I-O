@@ -41,7 +41,7 @@ Each implementation also writes the results and execution times to a text file a
 git clone https://github.com/your-username/OddonacciCalculators.git
 cd OddonacciCalculators
 
-# Usage
+## Usage
 Compiling the Code
 javac main/TailRecursiveOddonacci.java
 javac main/LinearOddonacci.java
